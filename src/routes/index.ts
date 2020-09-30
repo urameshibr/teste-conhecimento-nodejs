@@ -1,7 +1,6 @@
-import api from './api'
 import auth from './auth'
 import user from './user'
 
-const routes = {api, auth, user}
+const routes = {auth, user}
 
 export default routes

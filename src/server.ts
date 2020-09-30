@@ -1,38 +1,31 @@
-import Router from './router'
-import {Server as RestifyServer, bunyan} from 'restify'
+import Router from './Router'
+import {createServer, Server, plugins} from 'restify'
 
-// APENAS PARA TESTE, IREI REMOVER ISSO
-const getRandomIntBetween = function (min: number, max: number) {
-    return (Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + Math.ceil(min)).toString() + '.0.0';
-}
-
-class Server {
-    protected server: RestifyServer
+class ServerInit {
+    protected server: Server
     protected router: any
-    protected driver: bunyan
 
-    constructor(driver: any) {
-        this.driver = driver
+    constructor() {
+        this.server = createServer({
+            name: 'Agenda de contatos API'
+        })
+        this.router = new Router(this.server)
+        this.configureServer()
     }
 
-    startServer() {
-        this.server = this.driver.createServer({
-            name: 'Agenda de contatos API',
-            version: getRandomIntBetween(1, 200)
-        })
-
+    configureServer() {
+        this.server.use(plugins.bodyParser());
+        this.server.use(plugins.queryParser());
         this.loadRoutes()
-
         this.server.listen(3000, () => {
             console.log('O sistema foi iniciado')
         })
     }
 
     loadRoutes() {
-        this.router = new Router(this.server)
         this.router.handle()
     }
 }
 
-export default Server
+export default ServerInit
 

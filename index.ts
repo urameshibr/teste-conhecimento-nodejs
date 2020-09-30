@@ -1,8 +1,10 @@
 'use strict'
 console.log('Iniciando sistema')
 
-import server from './src/server'
-import * as restify from 'restify'
+import ServerInit from './src/server'
+// import {getMemoryUsage} from "./src/memory";
 
-(new server(restify)).startServer()
+new ServerInit
+
+// getMemoryUsage()
 

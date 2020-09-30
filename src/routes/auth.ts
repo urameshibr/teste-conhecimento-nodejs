@@ -1,47 +1,9 @@
-import {Request, Response, Next, Server} from "restify";
+import Router from "../Router";
+import AuthController from "../app/Controllers/AuthController";
 
-export default function (server: Server) {
-    server.get('/login', (request: Request, response: Response, next: Next) => {
-        response.json({
-            action: '',
-            authenticated: true,
-            params: [],
-            rules: []
-        })
-
-        return next()
-    })
-
-    server.post('/api/login', (request: Request, response: Response, next: Next) => {
-        response.json({
-            action: '',
-            authenticated: true,
-            params: [],
-            rules: []
-        })
-
-        return next()
-    })
-
-    server.get('/new-account', (request: Request, response: Response, next: Next) => {
-        response.json({
-            action: '',
-            authenticated: true,
-            params: [],
-            rules: []
-        })
-
-        return next()
-    })
-
-    server.post('/api/new-account', (request: Request, response: Response, next: Next) => {
-        response.json({
-            action: '',
-            authenticated: true,
-            params: [],
-            rules: []
-        })
-
-        return next()
-    })
+export default function (router: Router) {
+    router.assign('post', '/login', AuthController, 'login')
+    router.assign('post', '/logout', AuthController, 'logout')
+    router.assign('post', '/api/new-account', AuthController, 'store')
+    router.assign('post', '/api/password/forgot', AuthController, 'forgot')
 }
